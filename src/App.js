@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Container } from "./styles.app";
+import ContextMenu from "./Context Menu/contextmenu";
+import { useState } from "react";
 
 function App() {
+  const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+
+    let finalX = e.nativeEvent.x;
+    let finalY = e.nativeEvent.y;
+
+    if (e.nativeEvent.y + dimensions.height > window.innerHeight) {
+      const heightFormula =
+        e.nativeEvent.y + dimensions.height - window.innerHeight;
+      console.log(heightFormula);
+      finalY -= heightFormula;
+    }
+
+    if (e.nativeEvent.x + dimensions.width > window.innerWidth) {
+      finalX -= dimensions.width;
+    }
+
+    setContextMenuCoords({ x: finalX, y: finalY });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container onContextMenu={handleContextMenu}>
+      <ContextMenu setDimensions={setDimensions} coords={contextMenuCoords} />
+    </Container>
   );
 }
 
