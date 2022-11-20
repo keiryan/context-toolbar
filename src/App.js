@@ -1,5 +1,5 @@
 import "./App.css";
-import { Container } from "./styles.app";
+import { Container, TextContainer } from "./styles.app";
 import ContextMenu from "./Context Menu/contextmenu";
 import { useState } from "react";
 
@@ -28,6 +28,7 @@ function App() {
   };
   return (
     <Container onContextMenu={handleContextMenu}>
+      <TextContainer>Right Click</TextContainer>
       <ContextMenu setDimensions={setDimensions} coords={contextMenuCoords} />
     </Container>
   );
