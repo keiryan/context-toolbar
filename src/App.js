@@ -4,32 +4,32 @@ import ContextMenu from "./Context Menu/contextmenu";
 import { useState } from "react";
 
 function App() {
-  const [contextMenuCoords, setContextMenuCoords] = useState({ x: 0, y: 0 });
+  const [clickOrigin, setClickOrigin] = useState({ x: 0, y: 0 });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   const handleContextMenu = (e) => {
     e.preventDefault();
 
-    let finalX = e.nativeEvent.x;
-    let finalY = e.nativeEvent.y;
+    let finalX = e.clientX - e.target.offsetLeft;
+    let finalY = e.clientY - e.target.offsetTop;
 
-    if (e.nativeEvent.y + dimensions.height > window.innerHeight) {
-      const heightFormula =
-        e.nativeEvent.y + dimensions.height - window.innerHeight;
-      console.log(heightFormula);
+    if (finalY + dimensions.height > window.innerHeight) {
+      const heightFormula = finalY + dimensions.height - window.innerHeight;
       finalY -= heightFormula;
+      finalX = e.clientX - e.target.offsetLeft;
     }
 
-    if (e.nativeEvent.x + dimensions.width > window.innerWidth) {
+    if (finalX + dimensions.width > window.innerWidth) {
       finalX -= dimensions.width;
     }
 
-    setContextMenuCoords({ x: finalX, y: finalY });
+    setClickOrigin({ x: finalX, y: finalY });
   };
+
   return (
     <Container onContextMenu={handleContextMenu}>
       <TextContainer>Right Click</TextContainer>
-      <ContextMenu setDimensions={setDimensions} coords={contextMenuCoords} />
+      <ContextMenu setDimensions={setDimensions} clickOrigin={clickOrigin} />
     </Container>
   );
 }
