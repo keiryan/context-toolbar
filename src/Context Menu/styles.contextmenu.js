@@ -12,8 +12,8 @@ export const MenuContainer = styled(Base)`
   background-color: #fff;
   border-radius: 4px;
   position: absolute;
-  top: ${(props) => props.coords.y}px;
-  left: ${(props) => props.coords.x}px;
+  top: ${(props) => props.clickOrigin.y}px;
+  left: ${(props) => props.clickOrigin.x}px;
   max-height: ${(props) => (props.toggled ? "1000px" : "0")};
   transition: max-height 0.3s ease-in-out;
 `;
@@ -43,4 +43,14 @@ export const MenuRowOption = styled.div``;
 
 export const MenuRowIcon = styled.div`
   margin-right: 10px;
+`;
+
+export const DragHeader = styled(Base)`
+  justify-content: center;
+  width: 100%;
+  cursor: move;
+`;
+
+export const DragContainer = styled.div`
+  transform: rotate(90deg);
 `;

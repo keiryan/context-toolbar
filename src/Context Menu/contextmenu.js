@@ -33,8 +33,6 @@ export default function ContextMenu(props) {
         width: ref.current.clientWidth,
       });
 
-      console.log(ref.current.clientHeight, ref.current.clientWidth);
-
       setToggled({ toggled: false });
     }, 300);
 
@@ -45,13 +43,17 @@ export default function ContextMenu(props) {
 
   const handleClick = () => {
     setToggled({ toggled: !toggled.toggled });
+    setTimeout(() => {
+      setCheckingDimensions({ checkingDimensions: true });
+    }, 300);
   };
 
   useEffect(() => {
-    if (props.coords.x !== 0 && props.coords.y !== 0) {
+    if (props.clickOrigin.x !== 0 && props.clickOrigin.y !== 0) {
+      setCheckingDimensions({ checkingDimensions: false });
       setToggled({ toggled: true });
     }
-  }, [props.coords]);
+  }, [props.clickOrigin]);
 
   useEffect(() => {
     initiateCheckOfDimensions();
@@ -61,13 +63,16 @@ export default function ContextMenu(props) {
     <MenuContainer
       checkingDimensions={checkingDimensions}
       ref={ref}
-      onClick={handleClick}
       toggled={toggled.toggled}
-      coords={props.coords}
+      clickOrigin={props.clickOrigin}
     >
       {listOfOptions.map((option) => {
         return (
-          <MenuRow toggled={toggled.toggled} key={option.id}>
+          <MenuRow
+            onClick={handleClick}
+            toggled={toggled.toggled}
+            key={option.id}
+          >
             <MenuRowIcon>
               <SVG generalFill={"#969696"} icon={option} />
             </MenuRowIcon>
