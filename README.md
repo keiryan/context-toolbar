@@ -1,4 +1,4 @@
-A modern, I have been told "corporate" vibe context toolbar. Also my first stab at a context toolbar. (glass version coming soon)
+A modern, I have been told "corporate" vibe context toolbar. Also my first stab at a context toolbar. _(glass version coming soon)_
 
 ⚙️ Live code: https://githubbox.com/keiryan/context-toolbar
 
